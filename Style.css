@@ -1,0 +1,106 @@
+
+body {font-family: Arial, Helvetica, sans-serif;margin: 0;padding: 0;background-color: #f0f4f8; /*Light blue/grey background */ color: #333;line-height: 1.6;}
+.header-bar {
+    background-color: #004d99;
+color: white
+padding 10px 0;
+text-align: center;}
+.header-bar h1 {
+    font-weight: 900;
+    text-align: center;
+    color: white;
+    margin: 10px 0;
+}
+#main-title {
+    text-align: center;
+}
+.hero-image-container {
+    width: 100%;
+    overflow: hidden;
+}
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.nav-link {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-colour 0.3s;
+}
+.nav-link:hover {
+    background-color: #003366;
+}
+.container {
+max-width: 900px;
+margin: 30px auto;
+padding: 20px;
+background-color: white;
+border-radius: 8px;
+box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) ;
+}
+h1 {
+    color: #007bff;
+    border-bottom: #007bff;
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+h2 {
+    color: darkgreen;
+    margin-top: 30px;
+    padding-bottom:  5px;
+    border-bottom: 2px solid #007bff;
+}
+h3 {
+    color: #004d99;
+    margin-top: 20px;
+}
+.placeholders {
+    border: 2px dashed;
+    padding: 20px;
+    background-color: sienna; 
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top:  15px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: blueviolet;
+    color: white;
+}
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.card {
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    background-color: darkolivegreen;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
+}
+.link-button:hover {
+    background-color: crimson;
+}
+.footer-bar {
+    text-align: center;
+    padding: 15px;
+    background-color: darkgreen;
+    color: white;
+    margin-top: 40px;
+    font-size: 0.9em;
+}

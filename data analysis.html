@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twins: Applications and Data</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Digital Twins Technology</h1>
+        <nav>
+            <a href="index.html">Home </a>
+            <a href="technology.html">Technology</a>
+            <a href="impact.html">Impact</a>
+            <a href="data analysis.html" class="active">Data Analysis And References</a>
+            <a href="about.html">About Us</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2> Data Analysis</h2>
+        <div class="chart-section">
+            <div class="placeholder">
+                <h3>Digital Twin Adoption Trend (Chart 1)</h3>
+                <img src="adoption_trend.png" width="700" height="500">
+                <figcaption>Figure 1: Digital Twin Adoption Trend over 5 years.</figcaption>
+                <P>The above graph shows how digital Twin Technology has been Adapted in different industries over 5 years till 2023
+                    but as years move on, many industries will increasely attain the technology since its becoming vital in the industrial sector. </P>
+            </div>
+            <div class="placeholder">
+                <h3>I</h3>
+                <img src="Picture1.png"width="700" height="600">
+            </div>
+            <div class="placeholder">
+                <h3>Public Perception Score (Chart 2)</h3>
+                <p>A survey about Digital Twin Technology was carried out and the perceptions of each participant was obtained.</p>
+                <img src="survey_perception .png" width="700" height="500">
+                <p id="avg-score-display" class="score-display">Loading Average Importance Score...</p>
+            </div>
+        </div>
+        <hr class="separator">
+        <h3>Research References</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Reference Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody id="reference-table-body"> 
+                <tr><td colspan="3">Loading research references from Firebase...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="footer-bar">
+        &copy; 2025 Digital Twins Group Assignment | TEMB 1105
+    </footer>
+    <script>
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyD4q3R0818ZHpdXXG-0tudeNvGPj5jpWq4", 
+            authDomain: "digital-twins-temb1105.firebaseapp.com",
+            projectId: "digital-twins-temb1105",
+            storageBucket: "digital-twins-temb1105.firebasestorage.app",
+            messagingSenderId: "519567523084",
+            appId: "1:519567523084:web:f337f7c50b116d3c7d9d29",
+            measurementId: "G-1P72QT95QG"
+        };
+
+
+        firebase.initializeApp(FIREBASE_CONFIG);
+        const db = firebase.firestore();
+
+        firebase.firestore.setLogLevel('debug');
+        function fetchReferences() {
+            db.collection("References").get().then((querySnapshot) => {
+                const tableBody = document.getElementById("reference-table-body");
+                let htmlContent = '';
+                
+                if (querySnapshot.empty) {
+                     htmlContent = '<tr><td colspan="3">No references found in the database.</td></tr>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        htmlContent += `<tr><td>${data.title || 'N/A'}</td><td>${data.author || 'N/A'}</td><td>${data.year || 'N/A'}</td></tr>`;
+                    });
+                }
+                tableBody.innerHTML = htmlContent;
+            }).catch(error => {
+                 console.error("Error fetching references:", error);
+                 document.getElementById("reference-table-body").innerHTML = '<tr><td colspan="3">ERROR: Failed to load references. Check Firebase Rules!</td></tr>';
+            });
+        }
+
+        function calculateAndDisplaySurveyAvg() {
+            db.collection("Perceptions").get().then((querySnapshot) => {
+                let totalScore = 0;
+                let count = 0;
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (typeof data.importance_score === 'number' && data.importance_score >= 1 && data.importance_score <= 5) {
+                        totalScore += data.importance_score;
+                        count++;
+                    }
+                });
+                
+                const avgScore = count > 0 ? (totalScore / count).toFixed(2) : 'N/A';
+                
+                document.getElementById("avg-score-display").textContent = 
+                    `Average Importance Score (1-5): ${avgScore} (Based on ${count} responses)`;
+            }).catch(error => {
+                 console.error("Error fetching survey data:", error);
+                 document.getElementById("avg-score-display").textContent = 'ERROR: Failed to calculate survey average. Check Firebase Rules!';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchReferences();
+            calculateAndDisplaySurveyAvg();
+        });
+    </script>
+    
+</body>
+</html>
